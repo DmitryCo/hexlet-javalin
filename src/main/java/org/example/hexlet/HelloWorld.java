@@ -35,7 +35,7 @@ public class HelloWorld {
             ctx.result("Users ID: " + usersId + " Post ID: " + postId);
         });
 
-        app.get("/courses/{id}", ctx -> {
+        /*app.get("/courses/{id}", ctx -> {
             var id = Long.parseLong(ctx.pathParam("id"));
             List<Course> courses = List.of(
                     new Course(1L, "Java", "Основы Java, программирование на Java."),
@@ -64,6 +64,41 @@ public class HelloWorld {
             var header = "Курсы по программированию";
             var page = new CoursePage(courses, header);
             ctx.render("courses/index.jte", model("page", page));
+        });*/
+
+        app.get("/courses/{id}", ctx -> {
+            var id = Long.parseLong(ctx.pathParam("id"));
+            List<Course> courses = List.of(
+                    new Course(1L, "Java", "Основы Java, программирование на Java."),
+                    new Course(2L, "Python", "Введение в Python, анализ данных с помощью Python."),
+                    new Course(3L, "JavaScript", "Изучение основ JavaScript для веб-разработки."),
+                    new Course(4L, "Ruby", "Введение в Ruby и создание веб-приложений с Ruby on Rails.")
+            );
+            Course course = courses.stream()
+                    .filter(c -> c.getId().equals(id))
+                    .findFirst()
+                    .orElse(null);
+
+            var header = "Курсы по программированию";
+            if (course == null) {
+                ctx.status(404).result("Курс не найден");
+            } else {
+                var page = new CoursePage(List.of(course), header);
+                ctx.render("layout/layout.jte", model("page", page));
+            }
+        });
+
+        app.get("/courses", ctx -> {
+            List<Course> courses = List.of(
+                    new Course(1L, "Java", "Основы Java, программирование на Java."),
+                    new Course(2L, "Python", "Введение в Python, анализ данных с помощью Python."),
+                    new Course(3L, "JavaScript", "Изучение основ JavaScript для веб-разработки."),
+                    new Course(4L, "Ruby", "Введение в Ruby и создание веб-приложений с Ruby on Rails.")
+            );
+
+            var header = "Курсы по программированию";
+            var page = new CoursePage(courses, header);
+            ctx.render("layout/layout.jte", model("page", page));
         });
 
         app.start(7070);

@@ -1,12 +1,9 @@
+@import gg.jte.Content
 @import org.example.hexlet.dto.courses.CoursePage
 @param CoursePage page
 
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Хекслет</title>
-    </head>
-    <body>
+@template.layout.page(
+    content = @`
         <h1>${page.getHeader()}</h1>
         @if(page.getCourses().isEmpty())
             <p>Пока не добавлено ни одного курса</p>
@@ -18,5 +15,5 @@
                </div>
             @endfor
         @endif
-    </body>
-</html>
+    `
+)
