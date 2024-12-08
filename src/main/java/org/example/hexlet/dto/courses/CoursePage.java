@@ -11,5 +11,5 @@ import lombok.Getter;
 @Getter
 public class CoursePage {
     private List<Course> courses;
-    private String header;
+    public String term;
 }
