@@ -2,9 +2,14 @@
 @import org.example.hexlet.dto.courses.CoursePage
 @param CoursePage page
 
-@template.layout.page(
+@template.layout.layout(
     content = @`
-        <h1>${page.getHeader()}</h1>
+        <h1>Список курсов</h1>
+        <form action="/courses" method="get">
+          <input type="search" required name="term" value="${page.getTerm()}" />
+          <input type="submit" value="Искать">
+        </form>
+
         @if(page.getCourses().isEmpty())
             <p>Пока не добавлено ни одного курса</p>
         @else
