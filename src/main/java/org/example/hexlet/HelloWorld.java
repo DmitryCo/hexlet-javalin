@@ -9,6 +9,10 @@ import static io.javalin.rendering.template.TemplateUtil.model;
 
 import org.example.hexlet.model.Course;
 import org.example.hexlet.dto.courses.CoursePage;
+import org.example.hexlet.model.User;
+import org.example.hexlet.dto.users.UserPage;
+import org.example.hexlet.repository.UserRepository;
+import org.example.hexlet.repository.CourseRepository;
 
 public class HelloWorld {
     public static void main(String[] args) {
@@ -17,7 +21,7 @@ public class HelloWorld {
             config.fileRenderer(new JavalinJte());
         });
 
-        app.get("/users", ctx -> ctx.result("GET /users"));
+        /*app.get("/users", ctx -> ctx.result("GET /users"));
         app.post("/users", ctx -> ctx.result("POST /users"));
 
         app.get("/hello", ctx -> {
@@ -29,7 +33,7 @@ public class HelloWorld {
             }
         });
 
-        app.get("/users/{id}/post/{postId}", ctx -> {
+        /*app.get("/users/{id}/post/{postId}", ctx -> {
             var usersId = ctx.pathParam("id");
             var postId = ctx.pathParam("postId");
             ctx.result("Users ID: " + usersId + " Post ID: " + postId);
@@ -82,8 +86,48 @@ public class HelloWorld {
             }
             var page = new CoursePage(courses, term);
             ctx.render("courses/index.jte", model("page", page));
+        });*/
+
+        app.get("/users", ctx -> {
+            List<User> users = UserRepository.getEntities();
+            var userPage = new UserPage(users, "Список пользователей");
+            ctx.render("users/index.jte", model("page", userPage));
         });
 
-        app.start(7070);
+        app.get("/users/build", ctx -> {
+            ctx.render("users/build.jte");
+        });
+
+        app.post("/users", ctx -> {
+            var name = ctx.formParam("name").trim();
+            var email = ctx.formParam("email").trim().toLowerCase();
+            var password = ctx.formParam("password");
+            var passwordConfirmation = ctx.formParam("passwordConfirmation");
+
+            var user = new User(name, email, password);
+            UserRepository.save(user);
+            ctx.redirect("/users");
+        });
+
+        app.get("/courses", ctx -> {
+            List<Course> courses = CourseRepository.getEntities();
+            var coursePage = new CoursePage(courses, "Список пользователей");
+            ctx.render("courses/index.jte", model("page", coursePage));
+        });
+
+        app.get("/courses/build", ctx -> {
+            ctx.render("courses/build.jte");
+        });
+
+        app.post("/courses", ctx -> {
+            var name = ctx.formParam("name").trim();
+            var description = ctx.formParam("description").trim();
+
+            var course = new Course(name, description);
+            CourseRepository.save(course);
+            ctx.redirect("/courses");
+        });
+
+     app.start(7070);
     }
 }
