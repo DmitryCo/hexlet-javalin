@@ -1,5 +1,7 @@
 package org.example.hexlet;
 
+import org.example.hexlet.NamedRoutes;
+
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
@@ -92,18 +94,18 @@ public class HelloWorld {
             ctx.render("courses/index.jte", model("page", page));
         });*/
 
-        app.get("/users", ctx -> {
+        app.get(NamedRoutes.usersPath(), ctx -> {
             List<User> users = UserRepository.getEntities();
             var userPage = new UserPage(users, "Список пользователей");
             ctx.render("users/index.jte", model("page", userPage));
         });
 
-        app.get("/users/build", ctx -> {
+        app.get(NamedRoutes.buildUserPath(), ctx -> {
             var page = new BuildUserPage();
             ctx.render("users/build.jte", model("page", page));
         });
 
-        app.post("/users", ctx -> {
+        app.post(NamedRoutes.usersPath(), ctx -> {
             var name = ctx.formParam("name").trim();
             var email = ctx.formParam("email").trim().toLowerCase();
 
@@ -121,18 +123,18 @@ public class HelloWorld {
             }
         });
 
-        app.get("/courses", ctx -> {
+        app.get(NamedRoutes.coursesPath(), ctx -> {
             List<Course> courses = CourseRepository.getEntities();
             var coursePage = new CoursePage(courses, "Список курсов");
             ctx.render("courses/index.jte", model("page", coursePage));
         });
 
-        app.get("/courses/build", ctx -> {
+        app.get(NamedRoutes.buildCoursesPath(), ctx -> {
             var page = new BuildCoursePage();
             ctx.render("courses/build.jte", model("page", page));
         });
 
-        app.post("/courses", ctx -> {
+        app.post(NamedRoutes.coursesPath(), ctx -> {
             try {
                 var name = ctx.formParamAsClass("name", String.class)
                         .check(value -> value.length() > 2, "Название курса должно быть не короче 2 символов")
@@ -147,6 +149,12 @@ public class HelloWorld {
                 var page = new BuildCoursePage(ctx.formParam("name"), ctx.formParam("description"), e.getErrors());
                 ctx.render("courses/build.jte", model("page", page));
             }
+        });
+
+        app.exception(Exception.class, (e, ctx) -> {
+            ctx.status(500);
+            ctx.result("Server Error: " + e.getMessage());
+            e.printStackTrace(); // Выводит стек трейс в консоль
         });
 
      app.start(7070);
