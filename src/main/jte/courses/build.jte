@@ -20,20 +20,20 @@
           </ul>
       @endif
 
-<form action="/courses" method="post">
-  <div>
-    <label>
-      Название курса
-      <input type="text" required name="name" value="${page.getName()}"/>
-    </label>
-  </div>
-  <div>
-    <label>
-      Описание курса
-      <input type="text" required name="description" value="${page.getDescription()}"/>
-    </label>
-  </div>
-  <input type="submit" value="Создать" />
-</form>
-</body>
+      <form action="/courses" method="post">
+          <div>
+              <label>
+                  Название курса
+                  <input type="text" required name="name" value="${page.getName()}"/>
+              </label>
+          </div>
+          <div>
+              <label>
+                  Описание курса
+                  <input type="text" required name="description" value="${page.getDescription()}"/>
+              </label>
+          </div>
+          <input type="submit" value="Создать" />
+      </form>
+    </body>
 </html>
