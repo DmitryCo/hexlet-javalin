@@ -1,3 +1,7 @@
+@import gg.jte.Content
+@import org.example.hexlet.dto.users.BuildUserPage;
+@param BuildUserPage page
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
+
     @if(page.getErrors() != null && !page.getErrors().isEmpty())
         <ul>
             @for(var validator : page.getErrors().values())
