@@ -31,12 +31,12 @@ public class HelloWorld {
         });
 
         app.get(NamedRoutes.usersPath(), UsersController::index);
-        app.get(NamedRoutes.buildUserPath(), ctx -> UsersController.build(ctx));
-        app.post(NamedRoutes.usersPath(), ctx -> UsersController.create(ctx));
+        app.get(NamedRoutes.buildUserPath(), UsersController::build);
+        app.post(NamedRoutes.usersPath(), UsersController::create);
 
         app.get(NamedRoutes.coursesPath(), CoursesController::index);
-        app.get(NamedRoutes.buildCoursePath(), ctx -> CoursesController.build(ctx));
-        app.post(NamedRoutes.coursesPath(), ctx -> CoursesController.create(ctx));
+        app.get(NamedRoutes.buildCoursePath(), CoursesController::build);
+        app.post(NamedRoutes.coursesPath(), CoursesController::create);
 
         app.exception(Exception.class, (e, ctx) -> {
             ctx.status(500);
