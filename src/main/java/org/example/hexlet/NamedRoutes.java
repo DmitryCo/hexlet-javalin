@@ -22,7 +22,7 @@ public class NamedRoutes {
     }
 
     // Маршрут формы добавления курсов
-    public static String buildCoursesPath() {
+    public static String buildCoursePath() {
         return "/courses/build";
     }
 
