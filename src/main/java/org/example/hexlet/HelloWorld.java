@@ -23,12 +23,24 @@ import org.example.hexlet.repository.CourseRepository;
 import org.example.hexlet.controller.UsersController;
 import org.example.hexlet.controller.CoursesController;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class HelloWorld {
     public static void main(String[] args) {
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte());
         });
+
+        app.before(ctx -> {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedNow = now.format(formatter);
+            System.out.println("Request received at: " + formattedNow);
+        });
+
+        app.get("/", ctx -> ctx.result("Welcome to Hexlet!"));
 
         app.get(NamedRoutes.usersPath(), UsersController::index);
         app.get(NamedRoutes.buildUserPath(), UsersController::build);
