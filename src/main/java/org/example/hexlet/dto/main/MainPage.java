@@ -1,4 +1,4 @@
-package org.example.hexlet.dto;
+package org.example.hexlet.dto.main;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
