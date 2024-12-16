@@ -1,7 +1,7 @@
 package org.example.hexlet;
 
 import org.example.hexlet.NamedRoutes;
-
+import org.example.hexlet.dto.main.MainPage;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
@@ -40,8 +40,6 @@ public class HelloWorld {
             System.out.println("Request received at: " + formattedNow);
         });
 
-        app.get("/", ctx -> ctx.result("Welcome to Hexlet!"));
-
         app.get(NamedRoutes.usersPath(), UsersController::index);
         app.get(NamedRoutes.buildUserPath(), UsersController::build);
         app.post(NamedRoutes.usersPath(), UsersController::create);
@@ -49,6 +47,13 @@ public class HelloWorld {
         app.get(NamedRoutes.coursesPath(), CoursesController::index);
         app.get(NamedRoutes.buildCoursePath(), CoursesController::build);
         app.post(NamedRoutes.coursesPath(), CoursesController::create);
+
+        app.get("/", ctx -> {
+            var visited = Boolean.valueOf(ctx.cookie("visited"));
+            var page = new MainPage(visited);
+            ctx.render("main/index.jte", model("page", page));
+            ctx.cookie("visited", String.valueOf(true));
+        });
 
         app.exception(Exception.class, (e, ctx) -> {
             ctx.status(500);
