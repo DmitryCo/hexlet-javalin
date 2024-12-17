@@ -9,6 +9,7 @@ import java.util.List;
 import java.lang.String;
 
 import static io.javalin.rendering.template.TemplateUtil.model;
+
 import io.javalin.validation.ValidationException;
 
 import org.example.hexlet.model.Course;
@@ -22,6 +23,7 @@ import org.example.hexlet.repository.CourseRepository;
 
 import org.example.hexlet.controller.UsersController;
 import org.example.hexlet.controller.CoursesController;
+import org.example.hexlet.controller.SessionsController;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -48,11 +50,16 @@ public class HelloWorld {
         app.get(NamedRoutes.buildCoursePath(), CoursesController::build);
         app.post(NamedRoutes.coursesPath(), CoursesController::create);
 
-        app.get("/", ctx -> {
+        /*app.get("/", ctx -> {
             var visited = Boolean.valueOf(ctx.cookie("visited"));
             var page = new MainPage(visited);
             ctx.render("main/index.jte", model("page", page));
             ctx.cookie("visited", String.valueOf(true));
+        });*/
+
+        app.get("/", ctx -> {
+            var page = new MainPage(ctx.sessionAttribute("currentUser"));
+            ctx.render("main/index.jte", model("page", page));
         });
 
         app.exception(Exception.class, (e, ctx) -> {
@@ -60,6 +67,13 @@ public class HelloWorld {
             ctx.result("Server Error: " + e.getMessage());
             e.printStackTrace(); // Выводит стек трейс в консоль
         });
+
+        // Отображение формы логина
+        app.get("/sessions/build", SessionsController::build);
+        // Процесс логина
+        app.post("/sessions", SessionsController::create);
+        // Процесс выхода из аккаунта
+        app.delete("/sessions", SessionsController::destroy);
 
         app.start(7070);
     }
