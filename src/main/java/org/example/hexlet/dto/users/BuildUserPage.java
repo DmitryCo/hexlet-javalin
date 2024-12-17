@@ -15,4 +15,9 @@ public class BuildUserPage {
     private String name;
     private String email;
     private Map<String, List<ValidationError<Object>>> errors;
+
+    public BuildUserPage(String name, Map<String, List<ValidationError<Object>>> errors) {
+        this.name = name;
+        this.errors = errors;
+    }
 }
