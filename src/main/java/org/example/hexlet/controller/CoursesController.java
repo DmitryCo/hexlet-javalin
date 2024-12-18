@@ -18,6 +18,7 @@ public class CoursesController {
     public static void index(Context ctx) {
         List<Course> courses = CourseRepository.getEntities();
         var coursePage = new CoursePage(courses, "Список курсов");
+        coursePage.setFlash(ctx.consumeSessionAttribute("flash"));
         ctx.render("courses/index.jte", model("page", coursePage));
     }
 
@@ -36,6 +37,9 @@ public class CoursesController {
                     .get();
             var course = new Course(name, description);
             CourseRepository.save(course);
+            // Добавляем сообщение в сессию
+            // Ключ может иметь любое название, здесь мы выбрали flash
+            ctx.sessionAttribute("flash", "Course has been created!");
             ctx.redirect("/courses");
         } catch (ValidationException e) {
             var page = new BuildCoursePage(ctx.formParam("name"), ctx.formParam("description"), e.getErrors());
