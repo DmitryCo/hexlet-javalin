@@ -1,9 +1,10 @@
 @import gg.jte.Content
 @import org.example.hexlet.dto.users.UserPage
-@import org.example.hexlet.NamedRoutes;
+@import org.example.hexlet.NamedRoutes
 @param UserPage page
 
-@template.layout.layout(
+@template.layout.page(
+    page = page,
     content = @`
     <h1>Список пользователей</h1>
     <p>Welcome to the users page.</p>
