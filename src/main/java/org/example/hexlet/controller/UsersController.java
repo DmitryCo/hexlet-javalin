@@ -18,6 +18,7 @@ public class UsersController {
     public static void index(Context ctx) {
         List<User> users = UserRepository.getEntities();
         var userPage = new UserPage(users, "Список пользователей");
+        userPage.setFlash(ctx.consumeSessionAttribute("flash"));
         ctx.render("users/index.jte", model("page", userPage));
     }
 
@@ -37,6 +38,9 @@ public class UsersController {
                     .get();
             var user = new User(name, email, password);
             UserRepository.save(user);
+            // Добавляем сообщение в сессию
+            // Ключ может иметь любое название, здесь мы выбрали flash
+            ctx.sessionAttribute("flash", "New user has been successfully registered!");
             ctx.redirect("/users");
         } catch (ValidationException e) {
             var page = new BuildUserPage(name, email, e.getErrors());
