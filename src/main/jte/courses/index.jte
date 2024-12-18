@@ -1,9 +1,10 @@
 @import gg.jte.Content
 @import org.example.hexlet.dto.courses.CoursePage
-@import org.example.hexlet.NamedRoutes;
+@import org.example.hexlet.NamedRoutes
 @param CoursePage page
 
-@template.layout.layout(
+@template.layout.page(
+    page = page,
     content = @`
         <h1>Список курсов</h1>
         <form action="/courses" method="get">
