@@ -62,6 +62,8 @@ public class HelloWorld {
             ctx.render("main/index.jte", model("page", page));
         });
 
+
+
         app.exception(Exception.class, (e, ctx) -> {
             ctx.status(500);
             ctx.result("Server Error: " + e.getMessage());

@@ -1,5 +1,7 @@
 @import gg.jte.Content
+@import org.example.hexlet.dto.main.BasePage // Импортируем базовый класс
 @param Content content
+@param BasePage page = null // Если не передали, то игнорируем
 
 <!doctype html>
 <html lang="en">
@@ -20,6 +22,9 @@
             </nav>
         </header>
         <main>
+                @if(page != null && page.getFlash() != null)
+                    <p>${page.getFlash()}</p>
+                @endif
             ${content}
         </main>
         <footer>
