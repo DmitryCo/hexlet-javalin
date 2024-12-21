@@ -1,26 +1,32 @@
-@import gg.jte.Content
-@import org.example.hexlet.dto.courses.CoursePage
-@import org.example.hexlet.NamedRoutes
-@param CoursePage page
+@import org.example.hexlet.utilities.NamedRoutes
+@import org.example.hexlet.dto.courses.CoursesPage
+@param CoursesPage page
 
 @template.layout.page(
-    page = page,
+    title = "Courses",
     content = @`
-        <h1>Список курсов</h1>
-        <form action="/courses" method="get">
-            <input type="search" required name="term" value="${page.getTerm()}" />
-            <input type="submit" value="Искать">
+        <h1>Programing Courses</h1>
+        <form action="${NamedRoutes.coursesPath()}" method="get">
+            <input type="search" name="term" value="${page.getTerm()}" placeholder="Name" />
+            <input type="search" name="description" value="${page.getTerm()}" placeholder="Description" />
+            <input type="submit" value="Search" />
         </form>
-
         @if(page.getCourses().isEmpty())
-            <p>Пока не добавлено ни одного курса</p>
+            <p>No courses have been added yet</p>
+            <div>
+                <a href="/courses/build">Create course</a>
+            </div>
         @else
-            @for(var course : page.getCourses())
-               <div>
-                   <h2><a href="${NamedRoutes.coursePath(course.getId())}">${course.getName()}</a></h2>
-                   <p>${course.getDescription()}</p>
-               </div>
-            @endfor
+            <table class="table table-striped">
+                @for(var course : page.getCourses())
+                    <tr>
+                        <td>
+                            <a href="/courses/${course.getId()}">${course.getName()}</a>
+                            <p>${course.getDescription()}</p>
+                        </td>
+                    </tr>
+                @endfor
+            </table>
         @endif
     `
 )

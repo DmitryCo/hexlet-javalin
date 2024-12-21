@@ -1,23 +1,32 @@
-@import gg.jte.Content
-@import org.example.hexlet.dto.users.UserPage
-@import org.example.hexlet.NamedRoutes
-@param UserPage page
+@import org.example.hexlet.utilities.NamedRoutes
+@import org.example.hexlet.dto.users.UsersPage
+@import org.example.hexlet.repository.UserRepository
+@param UsersPage page
 
 @template.layout.page(
-    page = page,
-    content = @`
-    <h1>Список пользователей</h1>
-    <p>Welcome to the users page.</p>
-    @if(page.getUsers().isEmpty())
-        <p>Пока не добавлено ни одного пользователя</p>
+title = "Users",
+content = @`
+    <h1>Users</h1>
+    <form action="${NamedRoutes.usersPath()}?term=" method="get">
+        <input type="search" name="term" value="${page.getTerm()}" placeholder="Name" />
+        <input type="submit" value="Search" />
+    </form>
+    @if(UserRepository.size() == 0)
+        <p>Users not found</p>
     @else
-        @for(var user : page.getUsers())
-            <div>
-                <a href="${NamedRoutes.usersPath(user.getId())}">
-                ${user.getName()}
-                </a>
-            </div>
-        @endfor
+        <table class="table table-striped">
+            @for(var user : UserRepository.search(page.getTerm()))
+                <tr>
+                    <td>${user.getId()}</td>
+                    <td>
+                        <a href="${NamedRoutes.userPath(user.getId())}">${user.getName()}</a>
+                    </td>
+                    <td>
+                        <p>${user.getEmail()}</p>
+                    </td>
+                </tr>
+            @endfor
+        </table>
     @endif
-    `
+`
 )

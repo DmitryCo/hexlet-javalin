@@ -1,10 +1,18 @@
-@import gg.jte.Content
+@import org.example.hexlet.utilities.NamedRoutes
 @import org.example.hexlet.dto.users.UserPage
 @param UserPage page
 
-@template.layout.layout(
-    content = @`
-        <h1>${page.getUsers().get(0).getName()}</h1>
-        <a href="/users">Назад к списку пользователей</a>
+@template.layout.page(
+title = page.getUser().getName(),
+content = @`
+        <div>
+            <h1>${page.getUser().getName()}</h1>
+        </div>
+        <div>
+            <a>${page.getUser().getEmail()}</a>
+        </div>
+        <div>
+            <a href="${NamedRoutes.editUserPath(page.getUser().getId())}">edit</a>
+        </div>
     `
 )

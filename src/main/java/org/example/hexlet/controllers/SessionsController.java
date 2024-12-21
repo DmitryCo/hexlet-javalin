@@ -1,6 +1,5 @@
-package org.example.hexlet.controller;
+package org.example.hexlet.controllers;
 
-import org.example.hexlet.NamedRoutes;
 import io.javalin.http.Context;
 
 public class SessionsController {
@@ -10,9 +9,11 @@ public class SessionsController {
     }
 
     public static void create(Context ctx) {
-        var name = ctx.formParam("name");
+        var nickname = ctx.formParam("nickname");
 
-        ctx.sessionAttribute("currentUser", name);
+        // Тут должна быть проверка пароля
+
+        ctx.sessionAttribute("currentUser", nickname);
         ctx.redirect("/");
     }
 
