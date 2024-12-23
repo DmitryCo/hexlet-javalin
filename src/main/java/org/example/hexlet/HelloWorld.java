@@ -21,7 +21,8 @@ public class HelloWorld {
     public static void main(String[] args) throws Exception {
 
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;DB_CLOSE_DELAY=-1;");
+        hikariConfig.setJdbcUrl("postgresql://hexletjavalin_vzfg_user:vyjC646SuwBnIxLwlynLnoyYpAogQeWG@dpg-ctk2drlum" +
+                "phs73fdueb0-a.oregon-postgres.render.com/hexletjavalin_vzfg");
 
         var dataSource = new HikariDataSource(hikariConfig);
         var url = HelloWorld.class.getClassLoader().getResourceAsStream("schema.sql");
