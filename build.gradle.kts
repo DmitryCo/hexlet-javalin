@@ -33,6 +33,7 @@ dependencies {
     implementation("com.h2database:h2:2.2.220")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+    implementation("org.postgresql:postgresql:42.6.0")
 }
 
 tasks.test {
