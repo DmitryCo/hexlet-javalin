@@ -69,13 +69,12 @@ public class HelloWorld {
     }
 
     private static int getPort() {
-        String port = System.getenv().getOrDefault("PORT", "7070");
+        String port = System.getenv().getOrDefault("PORT", "5432");
         return Integer.parseInt(port);
     }
 
     private static String getDbUrl() {
         String envDbUrl = System.getenv("JDBC_DATABASE_URL");
-        return envDbUrl != null && !envDbUrl.isEmpty() ? envDbUrl : "postgresql://hexletjavalin_vzfg_user:vyjC646SuwBnIxLwlynLnoyYpAogQeWG@dpg-ctk2drlum\" +\n" +
-                "                \"phs73fdueb0-a.oregon-postgres.render.com/hexletjavalin_vzfg";
+        return envDbUrl != null && !envDbUrl.isEmpty() ? envDbUrl : "jdbc:postgresql://${dpg-ctk2drlumphs73fdueb0-a}:${5432}/${hexletjavalin_vzfg}?password=${vyjC646SuwBnIxLwlynLnoyYpAogQeWG}&user=${hexletjavalin_vzfg_user}";
     }
 }
