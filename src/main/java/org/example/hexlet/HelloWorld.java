@@ -69,7 +69,7 @@ public class HelloWorld {
     }
 
     private static int getPort() {
-        String port = System.getenv().getOrDefault("PORT", "5432");
+        String port = System.getenv().getOrDefault("PORT", "7070");
         return Integer.parseInt(port);
     }
 
