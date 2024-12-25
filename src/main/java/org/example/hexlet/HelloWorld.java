@@ -75,6 +75,16 @@ public class HelloWorld {
 
     private static String getDbUrl() {
         String envDbUrl = System.getenv("JDBC_DATABASE_URL");
-        return envDbUrl != null && !envDbUrl.isEmpty() ? envDbUrl : "jdbc:postgresql://${dpg-ctk2drlumphs73fdueb0-a}:${5432}/${hexletjavalin_vzfg}?password=${vyjC646SuwBnIxLwlynLnoyYpAogQeWG}&user=${hexletjavalin_vzfg_user}";
+        if (envDbUrl != null && !envDbUrl.isEmpty()) {
+            return envDbUrl;
+        } else {
+            String user = "hexletjavalin_vzfg_user";
+            String password = "vyjC646SuwBnIxLwlynLnoyYpAogQeWG";
+            String host = "dpg-ctk2drlumphs73fdueb0-a.oregon-postgres.render.com";
+            String port = "5432";
+            String database = "hexletjavalin_vzfg";
+
+            return String.format("jdbc:postgresql://%s:%s/%s?user=%s&password=%s", host, port, database, user, password);
+        }
     }
 }
