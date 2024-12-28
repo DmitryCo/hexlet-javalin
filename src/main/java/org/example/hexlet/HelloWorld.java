@@ -80,7 +80,7 @@ public class HelloWorld {
         } else {
             String user = "hexletjavalin_vzfg_user";
             String password = "vyjC646SuwBnIxLwlynLnoyYpAogQeWG";
-            String host = "dpg-ctk2drlumphs73fdueb0-a";
+            String host = "dpg-ctk2drlumphs73fdueb0-a.oregon-postgres.render.com";
             String port = "5432";
             String database = "hexletjavalin_vzfg";
 
